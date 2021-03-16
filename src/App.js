@@ -1,10 +1,8 @@
 import React from 'react'
+import Button from '@material-ui/core/Button';
 
 const getMedia = async () => {
-  const constraints = {
-    audio: true,
-    video: true,
-  }
+  const constraints = {audio: true,video: true}
 
   try {
     await navigator.mediaDevices.getUserMedia(constraints);
@@ -20,7 +18,9 @@ getMedia()
 const App = () => {
   return (
     <div>
-      Hello React
+      <Button variant="contained" color="primary">
+        Hello world
+    </Button>
     </div>
   );
 }
