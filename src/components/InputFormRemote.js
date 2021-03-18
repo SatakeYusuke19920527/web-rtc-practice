@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn({ remotePeerName, setRemotePeerName }) {
+  const label = "相手の名前"
   const classes = useStyles();
 
   return (
@@ -49,15 +50,14 @@ export default function SignIn() {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          相手の名前を入力してください
+          {label}を入力してください
         </Typography>
-        <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            label="相手の名前"
+            label={label}
             name="name"
             autoFocus
           />
@@ -70,7 +70,6 @@ export default function SignIn() {
           >
             決定
           </Button>
-        </form>
       </div>
       <Box mt={8}>
         <Copyright />

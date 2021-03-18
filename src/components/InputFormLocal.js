@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +7,62 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+export default function SignIn({ localPeerName, setLocalPeerName }) {
+  const label = "あなたの名前"
+  const classes = useStyles();
+  const [name, setName] = useState('')
+  const [disabled, setDisabled] = useState(true)
+  const [isComposed, setIsComposed] = useState(false)
+  useEffect(() => {
+    const disabled = name === ''
+    setDisabled(disabled)
+  }, [name])
+  const initializeLocalPeerName = () => {
+    setLocalPeerName(name)
+  }
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          {label}を入力してください
+        </Typography>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label={label}
+          name="name"
+          value={name}
+          autoFocus
+          onCompositionEnd={() => { setIsComposed(false) }}
+          onCompositionStart={() => { setIsComposed(true) }}
+          onChange={e => setName(e.target.value)}
+          onKeyDown={e => {
+            if (isComposed) return
+            if (e.target.value === '') return
+            if (e.key === 'Enter') initializeLocalPeerName(e.target.value)
+          }}
+        />
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={initializeLocalPeerName}
+          disabled={disabled}
+        >
+          決定
+          </Button>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
+  )
+}
 
 function Copyright() {
   return (
@@ -40,42 +96,3 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
-export default function SignIn() {
-  const label = "あなたの名前"
-  const classes = useStyles();
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          {label}を入力してください
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label={label}
-            name="name"
-            autoFocus
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            決定
-          </Button>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
-}
