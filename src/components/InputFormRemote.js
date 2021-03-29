@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback,useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -41,9 +41,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({ remotePeerName, setRemotePeerName }) {
+export default function SignIn({ localPeerName,remotePeerName, setRemotePeerName }) {
   const label = "相手の名前"
   const classes = useStyles();
+  const [name, setName] = useState('')
+  const [disabled, setDisabled] = useState(true)
+  const [isComposed, setIsComposed] = useState(false)
+  useEffect(() => {
+    const disabled = name === ''
+    setDisabled(disabled)
+  }, [name])
+
+  const initializeRemotePeerName = useCallback(() => {
+    setRemotePeerName(name)
+    console.log(name)
+    console.log(remotePeerName)
+  }, [name, remotePeerName, setRemotePeerName]);
+  
+  if (localPeerName === '') return <></>
+  if (remotePeerName !== '') return <></>
+  
+  console.log({localPeerName, remotePeerName})
 
   return (
     <Container component="main" maxWidth="xs">
@@ -52,28 +70,39 @@ export default function SignIn({ remotePeerName, setRemotePeerName }) {
         <Typography component="h1" variant="h5">
           {label}を入力してください
         </Typography>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label={label}
-            name="name"
-            autoFocus
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            決定
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label={label}
+          name="name"
+          value={name}
+          onCompositionEnd={() => { setIsComposed(false) }}
+          onCompositionStart={() => { setIsComposed(true) }}
+          onChange={e => setName(e.target.value)}
+          onKeyDown={e => {
+            if (isComposed) return
+            if (e.target.value === '') return
+            if (e.key === 'Enter') initializeRemotePeerName(e.target.value)
+          }}
+          autoFocus
+        />
+        <Button
+          type="submit"
+          fullWidth
+          disabled={disabled}
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={initializeRemotePeerName}
+        >
+          決定
           </Button>
       </div>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
-  );
+  )
 }

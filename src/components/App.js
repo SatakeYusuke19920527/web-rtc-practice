@@ -21,14 +21,15 @@ const App = () => {
   const [remotePeerName, setRemotePeerName] = useState('')
   if (!localPeerName) {
     return <InputFormLocal
-        localPeerName={localPeerName}
-        setLocalPeerName={setLocalPeerName}
-      />
+      localPeerName={localPeerName}
+      setLocalPeerName={setLocalPeerName}
+    />
   } else {
     return <InputFormRemote
-        remotePeerName={remotePeerName}
-        setRemotePeerName={setRemotePeerName}
-      />
+      localPeerName={localPeerName}
+      remotePeerName={remotePeerName}
+      setRemotePeerName={setRemotePeerName}
+    />
   }
 }
 
