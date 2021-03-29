@@ -60,8 +60,6 @@ export default function SignIn({ localPeerName,remotePeerName, setRemotePeerName
   
   if (localPeerName === '') return <></>
   if (remotePeerName !== '') return <></>
-  
-  console.log({localPeerName, remotePeerName})
 
   return (
     <Container component="main" maxWidth="xs">

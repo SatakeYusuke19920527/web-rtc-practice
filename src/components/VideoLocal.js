@@ -1,9 +1,12 @@
-import React, {useRef, useEffect} from 'react'
+import React, { useRef, useEffect } from 'react'
 
-const VideoLocal = () => {
+import Video from './Video'
+
+const VideoLocal = ({name}) => {
   const videoRef = useRef(null)
   const currentVideoRef = videoRef.current
   useEffect(() => {
+    console.log(videoRef)
     if (currentVideoRef === null) return;
     const getMedia = async () => {
       const constraints = { audio: true, video: true }
@@ -17,9 +20,7 @@ const VideoLocal = () => {
     getMedia()
   }, [currentVideoRef])
   return (
-    <div>
-      
-    </div>
+    <Video isLocal={true} videoRef={videoRef} name={name} />
   )
 }
 
