@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useCallback,useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -18,9 +18,12 @@ export default function SignIn({ localPeerName, setLocalPeerName }) {
     const disabled = name === ''
     setDisabled(disabled)
   }, [name])
-  const initializeLocalPeerName = () => {
+  const initializeLocalPeerName = useCallback((e) => {
     setLocalPeerName(name)
-  }
+  }, [name, setLocalPeerName])
+  
+  if (localPeerName !== '') return <></>
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
