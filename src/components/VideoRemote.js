@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 
-const VideoRemote = () => {
+import Video from './Video'
+
+const VideoRemote = ({name}) => {
+  const videoRef = null
   return (
-    <div>
-      
-    </div>
+    <Video isLocal={false} videoRef={videoRef} name={name} />
   )
 }
 

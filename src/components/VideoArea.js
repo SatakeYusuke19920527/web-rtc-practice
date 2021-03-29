@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import VideoLocal from './VideoLocal'
-// import VideoRemote from './VideoRemote'
+import VideoRemote from './VideoRemote'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const VideoArea = ({localPeerName, remotePeerName}) => {
   const classes = useStyles();
-
+  console.log(remotePeerName, 'check')
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -28,9 +28,9 @@ const VideoArea = ({localPeerName, remotePeerName}) => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          {/* <VideoRemote
-            remotePeerName={remotePeerName}
-          /> */}
+          <VideoRemote
+            name={remotePeerName}
+          />
         </Grid>
       </Grid>
     </div>
