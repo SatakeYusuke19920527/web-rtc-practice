@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
 
 const VideoArea = ({localPeerName, remotePeerName}) => {
   const classes = useStyles();
-  console.log(remotePeerName, 'check')
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
